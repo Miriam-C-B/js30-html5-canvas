@@ -9,7 +9,6 @@ canvas.height = window.innerHeight;
 ctx.strokeStyle = "#BADA55";  // initial colour
 ctx.lineJoin = "round"; //when lines join the end is round
 ctx.lineCap = "round"; //line ends in a round ending
-ctx.lineWidth = 100;
 
 let isDrawing = false; //captures if someone is clicking down to draw or just moves their mouse
 
@@ -17,11 +16,18 @@ let isDrawing = false; //captures if someone is clicking down to draw or just mo
 let lastX = 0;
 let lastY = 0;
 
+//hsl colours
+let hue = 0;
+
+//variable that determines that line width grows
+let direction = true;
+
 //function and eventlisteners to capture drawing
 function draw(e) {
     if(!isDrawing) return; //stops the fn from running when you're not moused down (hold down the click)
     console.log(e);
     //the following bit inside the function actually displays the drawing!
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`; //hsl=colours of the rainbow, 100% saturation and 50% lightness
     ctx.beginPath(); // start from
     ctx.moveTo(lastX, lastY); //go to wherever the user's mouse stops
     ctx.lineTo(e.offsetX, e.offsetY); // offsetX and offsetY are values from the event e (=when you move the mouse); they are collected by the eventlisteners below
@@ -32,6 +38,22 @@ function draw(e) {
     // lastY = e.offsetY;
     //you can do the same by restructuring an array:
     [lastX, lastY] = [e.offsetX, e.offsetY];
+
+    //colour and changing line thickness stuff
+    hue++; //changes the hue every time we draw and gives the stroke a rainbow colour
+    if(hue > 360) {
+        hue = 0;
+    } //resets the hue once it reached 360; otherwise the console keeps counting
+    
+    if(ctx.lineWidth >= 100 || ctx.lineWidth <=1) {
+        direction = !direction; //if it's greater than 100 OR smaller than 1, flip the direction
+    }
+
+    if(direction) { //depending on what the direction is, the line width grows or shrinks
+        ctx.lineWidth++; //line width grows
+    } else {
+        ctx.lineWidth--; //line width shrinks
+    }
 }
 
 canvas.addEventListener("mousedown", (e) => {
