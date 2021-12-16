@@ -9,6 +9,7 @@ canvas.height = window.innerHeight;
 ctx.strokeStyle = "#BADA55";  // initial colour
 ctx.lineJoin = "round"; //when lines join the end is round
 ctx.lineCap = "round"; //line ends in a round ending
+ctx.lineWidth = 100;
 
 let isDrawing = false; //captures if someone is clicking down to draw or just moves their mouse
 
@@ -27,11 +28,18 @@ function draw(e) {
     ctx.stroke();
     
     //updates lastX and lastY to where the mouse actually is so you can draw lines on the canvas
-    lastX = e.offsetX;
-    lastY = e.offsetY;
+    // lastX = e.offsetX;
+    // lastY = e.offsetY;
+    //you can do the same by restructuring an array:
+    [lastX, lastY] = [e.offsetX, e.offsetY];
 }
 
+canvas.addEventListener("mousedown", (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY]; //updates these values so the line starts wherever the mouse is
+}); //runs function if isDrawing is true
+
 canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("mousedown", () => isDrawing = true); //runs function if isDrawing is true
 canvas.addEventListener("mouseup", () => isDrawing = false); //won't run function if you don't click anything
 canvas.addEventListener("mouseout", () => isDrawing = false); //when you move mouse off screen it will stop drawing
+
