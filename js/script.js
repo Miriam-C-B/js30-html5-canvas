@@ -9,8 +9,9 @@ canvas.height = window.innerHeight;
 ctx.strokeStyle = "#BADA55";  // initial colour
 ctx.lineJoin = "round"; //when lines join the end is round
 ctx.lineCap = "round"; //line ends in a round ending
+ctx.globalCompositeOperation = "xor"; //blends the different layers of strokes when you draw over them; look up different blend modes online
 
-let isDrawing = false; //captures if someone is clicking down to draw or just moves their mouse
+let isDrawing = false; //flag = condition you want to try out, see if it is true-> sth happens, if it's false something else happens
 
 //These two make the line start and stop when you click down
 let lastX = 0;
