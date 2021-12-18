@@ -20,7 +20,7 @@ let lastY = 0;
 //hsl colours
 let hue = 0;
 
-//variable that determines that line width grows
+//variable that determins that line width grows
 let direction = true;
 
 //function and eventlisteners to capture drawing
@@ -44,10 +44,10 @@ function draw(e) {
     hue++; //changes the hue every time we draw and gives the stroke a rainbow colour
     if(hue > 360) {
         hue = 0;
-    } //resets the hue once it reached 360; otherwise the console keeps counting
+    } //resets the hue once it reached 360; otherwise the console keeps counting the degrees
     
     if(ctx.lineWidth >= 100 || ctx.lineWidth <=1) {
-        direction = !direction; //if it's greater than 100 OR smaller than 1, flip the direction
+        direction = !direction; //if it's greater than 100 OR smaller than 1, flips the direction
     }
 
     if(direction) { //depending on what the direction is, the line width grows or shrinks
